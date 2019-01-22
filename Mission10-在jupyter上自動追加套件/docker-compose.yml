@@ -1,0 +1,26 @@
+version: '3'
+services:
+  jupyter:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    container_name: jupyter_test_compoese
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+    ports:
+      - "8888:8888"
+    command: start-notebook.sh --NotebookApp.token=''
+    volumes:
+      - ./work:/home/jovyan/work/
+  
+  mariaDB:
+    image: mariadb
+    container_name: cc104.rds.local
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: cc10403
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
